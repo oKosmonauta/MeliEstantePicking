@@ -8,21 +8,28 @@ body {
     background-color: #f0f0f0; 
     user-select: none; 
     margin: 0;
-    padding: 0;
+    padding: 10px;
+    box-sizing: border-box; 
+    overflow-x: hidden; 
 }
 
-h1 {
+.info-container h1 {
     color: #333;
     margin-bottom: 10px;
+    text-align: center;
+    flex-basis: 100%; 
+    font-size: 1.5em;
 }
 
-/* === NOVOS ESTILOS PARA O PLACAR === */
 .info-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; 
+    gap: 10px; 
     align-items: center;
-    width: 950px; /* Mesma largura do jogo */
+    width: 100%; 
+    max-width: 950px; 
     margin-bottom: 15px;
+    flex-wrap: wrap; 
 }
 
 .prompt-box, .score-board {
@@ -30,23 +37,28 @@ h1 {
     padding: 5px 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* flex-grow: 1; <-- REMOVIDO para não esticar */
+    /* flex-basis: 300px; <-- REMOVIDO para não esticar */
+    text-align: center; 
 }
 
 .score-board {
     display: flex;
-    gap: 30px; /* Espaço entre "Acertos" e "Melhor" */
+    gap: 30px; 
+    justify-content: center; 
+    flex-wrap: wrap;
 }
 
 h2 {
     color: #555;
-    margin: 10px; /* Espaçamento interno */
+    margin: 10px; 
 }
-/* ================================== */
-
 
 #game-container {
-    width: 950px; 
-    height: 700px;
+    width: 100%; 
+    max-width: 950px; 
+    height: auto; 
+    aspect-ratio: 950 / 700; 
     position: relative; 
     background-image: url('EstanteMeli.png'); 
     background-size: cover; 
@@ -56,72 +68,56 @@ h2 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-#game-grid {
-    display: grid;
-    grid-template-rows: repeat(5, 1fr); 
-    width: 100%; 
-    height: 100%; 
-    position: absolute; 
-    top: 0;
-    left: 0;
+#game-grid { display: grid; grid-template-rows: repeat(5, 1fr); width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+.grid-row { display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 10px; margin-bottom: 10px; }
+.grid-row-1 { grid-template-columns: repeat(4, 1fr); }
+.cell { margin-left: 5%; margin-right: 5%; border: 2px solid rgba(255, 255, 0, 0.7); cursor: pointer; transition: background-color 0.2s; }
+.cell:hover { background-color: rgba(255, 255, 0, 0.2); }
+.cell-wrapper { display: grid; grid-template-rows: 1fr 1fr; margin-left: 5%; margin-right: 5%; gap: 4px; }
+.sub-cell { cursor: pointer; transition: background-color 0.2s; border: 2px solid rgba(255, 255, 0, 0.7); }
+.sub-cell:hover { background-color: rgba(255, 255, 0, 0.2); }
+.sub-cell-top {}
+.correct { background-color: rgba(76, 175, 80, 0.6) !important; border: 2px solid #4CAF50 !important; }
+.incorrect { background-color: rgba(244, 67, 54, 0.6) !important; border: 2px solid #F44336 !important; }
+
+
+/* === MÍDIA QUERY PARA CELULARES (DE PÉ) === */
+@media (max-width: 768px) {
+    body { padding: 5px; justify-content: flex-start; }
+    .info-container { flex-direction: column; gap: 10px; }
+    .info-container h1 { font-size: 1.5em; }
+    .prompt-box, .score-board { width: 100%; padding: 5px; }
+    .score-board { gap: 15px; justify-content: space-around; }
+    h2 { font-size: 1em; margin: 5px; }
 }
 
-.grid-row {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); 
-    margin-top: 10px; 
-    margin-bottom: 10px; 
-}
+/* === MÍDIA QUERY PARA CELULARES (DEITADO) === */
+@media (orientation: landscape) and (max-height: 500px) {
+    body {
+        /* O fundo vermelho foi removido */
+        flex-direction: row;
+        justify-content: center; 
+        align-items: center; 
+        gap: 20px; 
+    }
 
-.grid-row-1 {
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas esticadas */
-}
-
-.cell {
-    margin-left: 20px; 
-    margin-right: 20px; 
-    border: 2px solid rgba(255, 255, 0, 0.7); 
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.cell:hover {
-    background-color: rgba(255, 255, 0, 0.2); 
-}
-
-/* --- A PEGADINHA (LINHA 3) --- */
-.cell-wrapper {
-    display: grid;
-    grid-template-rows: 1fr 1fr; 
-    margin-left: 20px;
-    margin-right: 20px;
+    .info-container {
+        /* === CORREÇÃO FINAL === */
+        /* O painel NÃO cresce, NÃO encolhe, e tem largura AUTOMÁTICA */
+        flex: 0 0 auto; 
+        /* width: 300px; <-- REMOVIDO! */ 
+        /* Agora o balão encolhe para o tamanho do texto */
+        
+        flex-direction: column; 
+        margin-bottom: 0; 
+    }
     
-    /* === MUDANÇA: A "SEPARADINHA" === */
-    gap: 4px; /* Adiciona um espaço de 4px entre as sub-células */
-}
+    .info-container h1 {
+         font-size: 1.3em; 
+    }
 
-.sub-cell {
-    cursor: pointer;
-    transition: background-color 0.2s;
-    border: 2px solid rgba(255, 255, 0, 0.7); 
-}
-.sub-cell:hover {
-    background-color: rgba(255, 255, 0, 0.2); 
-}
-
-.sub-cell-top {
-    /* A borda de baixo não é mais necessária por causa do 'gap' */
-    /* border-bottom: 2px solid rgba(255, 255, 0, 0.7); */ 
-}
-
-
-/* --- Feedback Visual --- */
-.correct {
-    background-color: rgba(76, 175, 80, 0.6) !important; 
-    border: 2px solid #4CAF50 !important;
-}
-
-.incorrect {
-    background-color: rgba(244, 67, 54, 0.6) !important; 
-    border: 2px solid #F44336 !important;
+    #game-container {
+        /* O jogo ocupa o resto do espaço */
+        flex: 1 1 auto; 
+    }
 }
