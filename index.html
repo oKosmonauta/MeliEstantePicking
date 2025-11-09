@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Endereço da Estante</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Acerte o Endereço na Estante!</h1>
+
+    <div class="info-container">
+        
+        <div class="prompt-box">
+            <h2>Desafio: <span id="prompt-display">...</span></h2>
+        </div>
+
+        <div class="score-board">
+            <h2>Acertos: <span id="current-score">0</span></h2>
+            <h2>Melhor: <span id="best-score">0</span></h2>
+        </div>
+
+    </div>
+
+    <div id="game-container">
+        <div id="game-grid"></div>
+    </div>
+
+    <audio id="hover-sound" preload="auto">
+        <source src="hover.ogg" type="audio/ogg">
+        <source src="hover.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <audio id="click-correct-sound" preload="auto">
+        <source src="click_correct.ogg" type="audio/ogg">
+        <source src="click_correct.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <audio id="click-incorrect-sound" preload="auto">
+        <source src="click_incorrect.ogg" type="audio/ogg">
+        <source src="click_incorrect.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <script src="script.js"></script>
+</body>
+</html>
